@@ -1,0 +1,90 @@
+<div class="container">
+<p class="head animate__animated animate__swing">ADD YOUR BLOGS HERE</p>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addBlogModal">Create Blog<i class="bi bi-file-plus"></i></button>
+
+    <div class="row">
+        <div class="col-md-4" *ngFor="let blog of blogsData">
+            <div class="card card-body">
+                <h4>{{blog.title}}</h4>
+                <span>{{blog.date}}</span>
+                <p class="text-muted">
+                   {{blog.description}}
+                </p>
+                <div class="d-flex align-items-center">
+                    <span class="mx-3">
+                        <i class="bi bi-pen" data-bs-toggle="modal" data-bs-target="#editBlogModal" (click)="getAllDetails(blog)"></i>
+
+                    </span>
+                    <span class="mx-3">
+                        <i class="bi bi-trash" (click)="deleteBlog(blog)"></i>
+                        
+                    </span>
+
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- ADD DAILY BLOGS -->
+    <div class="modal fade" id="addBlogModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Add Blog</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form [formGroup]="blogForm">
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label">Title</label>
+                  <input type="text" class="form-control" id="recipient-name" formControlName="title">
+                </div>
+                <div class="mb-3">
+                  <label for="message-text" class="col-form-label">Description</label>
+                  <textarea class="form-control" id="message-text" formControlName="description"></textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="message-text" class="col-form-label">Added On</label>
+                  <input type="datetime-local" class="form-control" formControlName="date">  
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" (click)="addBlog()" [disabled]="blogForm.invalid">Add </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit Blogs -->
+      <div class="modal fade" id="editBlogModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Blog</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form [formGroup] = "editForm">
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label">Title</label>
+                  <input type="text" class="form-control" id="recipient-name" formControlName="edit_title" [value]="blogDetails?.title">
+                </div>
+                <div class="mb-3">
+                  <label for="message-text" class="col-form-label">Description</label>
+                  <textarea class="form-control" id="message-text" formControlName="edit_description" [value]="blogDetails?.description"></textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="message-text" class="col-form-label">Updated On</label>
+                  <input type="datetime-local" class="form-control" formControlName="edit_date">  
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" (click)="updateBlog(blogDetails)" [disabled]="editForm.invalid">Update </button>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
